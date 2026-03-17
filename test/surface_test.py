@@ -233,18 +233,23 @@ class SurfaceTypeTest(unittest.TestCase):
 
     def test_convert_alpha_rejects_invalid_keyword_usage(self):
         s = pygame.Surface((10, 10), pygame.SRCALPHA, 32)
-
+        
         pygame.display.init()
 
-        with self.assertRaises(TypeError):
-            s.convert_alpha(surface="abc")
+        try: 
+            other = pygame.Surface((10, 10))
 
-        with self.assertRaises(TypeError):
-            s.convert_alpha(pouet=123)
+            with self.assertRaises(TypeError):
+             s.convert_alpha(surface="abc")
 
-        with self.assertRaises(TypeError):
-            s.convert_alpha(other=pygame.Surface((10, 10)), surface=other)
+            with self.assertRaises(TypeError):
+             s.convert_alpha(pouet=123)
 
+            with self.assertRaises(TypeError):
+             s.convert_alpha(other=pygame.Surface((10, 10)), surface=other)
+       
+        finally:
+            pygame.display.quit()
 
     def test_surface__pixel_format_as_surface_subclass(self):
         """Ensure a subclassed surface can be used for pixel format
